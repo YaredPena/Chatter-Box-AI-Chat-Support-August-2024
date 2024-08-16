@@ -15,8 +15,10 @@ for index, row in df.iterrows():
         response_dict[row['text']]=df.loc[df['tweet_id'] == row['in_response_to_tweet_id'], 'text'].iloc[0] #filter if the response is in the array. 
         #the returned dctionary is in question: response format
 print(len(response_dict.keys()))# length of our dictionary
-data= { 'complaints': response_dict.values(),
+data= { #'complaints': response_dict.values(),
         'responses': response_dict.keys() }
+#for the purposes of our project, while getting the complaints is okay, i think using the responses to format our assistant's repsonses would be better.
+data
 output=pd.DataFrame.from_dict(data=data)
 print(output)
 
