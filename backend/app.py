@@ -20,14 +20,7 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-persist_directory= 'db'  
-raw_documents = CSVLoader(file_path='backend\data\out.csv').load() #load pdf files from data folder
-text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)  #load data into 1000 bit chunks
-documents = text_splitter.split_documents(raw_documents) #split the text 
-db = Chroma.from_documents(documents, OpenAIEmbeddings(),persist_directory=persist_directory) #here we initialize the database. this is only to be run once. 
-os.environ['OPENAI_API_KEY'] = 
-
-db = Chroma.from_documents(documents, OpenAIEmbeddings())
+### note to self (jawad) : add llm stuff here for opening chromadb session. 
 
 ## loading the API key through an ENV file 
 openai_api_key = os.getenv('OPEN_AI_API_KEY')
