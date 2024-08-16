@@ -1,8 +1,16 @@
 from flask import Flask, request, jsonify
-import openai
 import os
-from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
+import getpass
+from langchain_text_splitters import CharacterTextSplitter
+from langchain_community.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_openai import OpenAI
+from langchain_community.chains import *
+from langchain_community.document_loaders import TextLoader
+from langchain_community.document_loaders import DirectoryLoader
+from langchain_community.document_loaders import PyPDFDirectoryLoader
 
 ##loading my environment variables
 from dotenv import load_dotenv 
@@ -12,24 +20,17 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 
-## SQL LITE db things
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///chatterbox.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+persist_directory= 'db'  
+raw_documents = CSVLoader(file_path='backend\data\out.csv').load() #load pdf files from data folder
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)  #load data into 1000 bit chunks
+documents = text_splitter.split_documents(raw_documents) #split the text 
+db = Chroma.from_documents(documents, OpenAIEmbeddings(),persist_directory=persist_directory) #here we initialize the database. this is only to be run once. 
+os.environ['OPENAI_API_KEY'] = 
 
-db = SQLAlchemy(app)
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-
-    def __repr__(self):
-        return f'<User {self.username}>'
-
-## End SQL db things
+db = Chroma.from_documents(documents, OpenAIEmbeddings())
 
 ## loading the API key through an ENV file 
-openai.api_key = os.getenv('OPEN_AI_API_KEY')
+openai_api_key = os.getenv('OPEN_AI_API_KEY')
 
 @app.route('/')
 def home():
