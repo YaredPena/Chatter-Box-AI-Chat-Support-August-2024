@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-First, run the development server:
+First, run the frontend inside the app directory:
 
 ```bash
 npm run dev
@@ -13,21 +13,16 @@ pnpm dev
 # or
 bun dev
 ```
+Then, run the development server inside the backend directory:
+```bash
+py app.py
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the frontend.
+## Other Files
+There are some helper python modules that were used in the creation of this project,
+data_proc was used to clean the dataset and utilize only the helpful information available.
+chroma_load was used to load the chromadb for our rag model to read from. It partitioned using a langchain csv loader and then used a openai embeddings model to store the data as vectors.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
