@@ -19,6 +19,8 @@ Then, run the development server inside the backend directory:
 ```bash
 py app.py
 ```
+Also, please note that this is an AI agent using OpenAI, and so you'll need a .env file containing your api key. The structure is 'OPENAI_API_KEY = sk-proj......"
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the frontend.
 ## Other Files
 There are some helper python modules that were used in the creation of this project,
